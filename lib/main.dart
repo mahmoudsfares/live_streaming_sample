@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modern_player/modern_player.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +38,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+      ),
+      body: Center(
+        child: ModernPlayer.createPlayer(
+            video: ModernPlayerVideo.youtubeWithUrl(url: 'https://www.youtube.com/watch?v=KffnHfKZ-vs', fetchQualities: true)),
       ),
     );
   }
