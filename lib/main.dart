@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pod_player/pod_player.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,29 +16,37 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const PlayVideoFromYoutube(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class PlayVideoFromYoutube extends StatefulWidget {
+  const PlayVideoFromYoutube({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<PlayVideoFromYoutube> createState() => _PlayVideoFromYoutubeState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _PlayVideoFromYoutubeState extends State<PlayVideoFromYoutube> {
+  late final PodPlayerController controller;
+
+  @override
+  void initState() {
+    controller = PodPlayerController(playVideoFrom: PlayVideoFrom.youtube('https://www.youtube.com/watch?v=0VzWgHkUYw4', live: true))..initialise();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
+      body: PodVideoPlayer(controller: controller),
     );
   }
 }
